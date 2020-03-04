@@ -18,7 +18,7 @@ class CreateSnippetsTable extends Migration
             $table->string('title')->nullable();
             $table->mediumText('content');
             $table->string('uid')->unique();
-            $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('author_id')->nullable();
             $table->dateTime('expired_at')->nullable();
             $table->unsignedSmallInteger('access_mode_id')->nullable();
             $table->timestamps();
