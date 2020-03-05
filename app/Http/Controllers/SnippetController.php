@@ -34,7 +34,7 @@ class SnippetController extends Controller {
      */
     public function store(Request $request) {
         $validatedData = $request->validate([
-            'title' => 'required|max:191',
+            'title' => 'max:191',
             'content' => 'required|max:16777215',
         ]);
         $snippet = new Snippet();
