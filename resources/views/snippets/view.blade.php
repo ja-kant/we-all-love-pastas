@@ -1,38 +1,27 @@
 @extends('layouts.base')
-
-@section('content')
-
-         
+@section('content')        
 
 <form method="post" action="{{ action('SnippetController@store') }}">
                 @csrf
                 <div class="form-group form-inline">
-                    <input value="{{ $snippet->title }}" type="text" name="title" id="title" class="form-control" placeholder="Название &laquo;пасты&raquo;" />
-
+                    <input disabled value="{{ $snippet->title }}" type="text" name="title" id="title" class="form-control" placeholder="Название &laquo;пасты&raquo;" />                    
                     <div class="dropdown">
                         <div class="btn-group">
                             <button class="btn dropdown-toggle disabled" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Время жизни
+                                                                
+                                @if ($snippet->expired_at)
+                                    Срок годности истекает: <b>{{ $snippet->expired_at }}</b>
+                                @else                                                                    
+                                    Срок годности <b>∞</b>
+                                @endisset                                                         
+                                
+                                
                             </button>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">10 мин.</a>
-                                <a class="dropdown-item" href="#">1 час</a>
-                                <a class="dropdown-item" href="#">3 часа</a>
-                                <a class="dropdown-item" href="#">1 день</a>
-                                <a class="dropdown-item" href="#">1 неделя</a>
-                                <a class="dropdown-item" href="#">1 месяц</a>
-                                <a class="dropdown-item" href="#">Не ограничено</a>
-                            </div>
                         </div>
                         <div class="btn-group">
                             <button class="btn dropdown-toggle disabled" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Доступ
+                                Доступ: <b>{{ $snippet->accessMode->title }}</b>
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                <a class="dropdown-item" href="#">Публичный</a>
-                                <a class="dropdown-item" href="#">Только по ссылке</a>
-                            </div>
                         </div>
                     </div>
                 </div>

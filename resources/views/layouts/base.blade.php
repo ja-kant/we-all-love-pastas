@@ -5,8 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        
+        <meta name="csrf-token" content="{{ csrf_token() }}">       
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -27,6 +26,8 @@
                 transition: .3s;
                 height: 500px;
             }
+            
+
 
         </style>
     </head>
@@ -70,9 +71,6 @@
             @endif
             
             @yield('content')
-            
-            
-
 
             <!--<h1 class="mt-5">Sticky footer with fixed navbar</h1>-->
             <!--<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>-->
