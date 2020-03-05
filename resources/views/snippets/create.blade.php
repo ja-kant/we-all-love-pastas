@@ -12,32 +12,33 @@
     @csrf
     <div class="form-group form-inline">
         <input type="text" name="title" id="title" class="form-control" placeholder="Название &laquo;пасты&raquo;" />
+        <input type="hidden" name="access_mode_id" id="access_mode_id"   />
+        <input type="hidden" name="seconds" id="seconds" />
 
         <div class="dropdown">
+
             <div class="btn-group">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="lifetime__dropdown_button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Время жизни
                 </button>
-
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">10 мин.</a>
-                    <a class="dropdown-item" href="#">1 час</a>
-                    <a class="dropdown-item" href="#">3 часа</a>
-                    <a class="dropdown-item" href="#">1 день</a>
-                    <a class="dropdown-item" href="#">1 неделя</a>
-                    <a class="dropdown-item" href="#">1 месяц</a>
-                    <a class="dropdown-item" href="#">Не ограничено</a>
+                <div class="dropdown-menu" aria-labelledby="lifetime__dropdown_button">
+                    @foreach ($lifetimes as $lt)
+                    <a class="dropdown-item" data-button="#lifetime__dropdown_button" data-input="#seconds" href="javascript:;" data-value="{{$lt->seconds}}">{{$lt->title}}</a>
+                    @endforeach
                 </div>
             </div>
+
             <div class="btn-group">
-                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="access_mode_id__dropdown_button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Доступ
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <a class="dropdown-item" href="#">Публичный</a>
-                    <a class="dropdown-item" href="#">Только по ссылке</a>
+                <div class="dropdown-menu" aria-labelledby="access_mode_id__dropdown_button">
+                    @foreach ($access_modes as $am)
+                    <a class="dropdown-item" href="javascript:;" data-button="#access_mode_id__dropdown_button" data-input="#access_mode_id" data-value="{{$am->id}}">{{$am->title}}</a>
+                    @endforeach
                 </div>
             </div>
+
             <button class="btn btn-primary" type="submit">Сохранить &laquo;пасту&raquo;</button>
         </div>
     </div>
@@ -46,4 +47,22 @@
 </form>
 
 
+@endsection
+
+
+
+
+@section('js')
+<script>
+    $(function () {
+        $(".dropdown-item").click(function (e) {
+            var btn = $(this).data('button');
+            $(btn).text($(this).html());            
+            var input = $(this).data('input');           
+            $(input).val($(this).data('value'));            
+            e.preventDefault();
+        });
+    });
+
+</script>
 @endsection

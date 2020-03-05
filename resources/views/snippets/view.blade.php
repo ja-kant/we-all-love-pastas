@@ -4,7 +4,7 @@
 <form method="post" action="{{ action('SnippetController@store') }}">
                 @csrf
                 <div class="form-group form-inline">
-                    <input disabled value="{{ $snippet->title }}" type="text" name="title" id="title" class="form-control" placeholder="Название &laquo;пасты&raquo;" />                    
+                    <input disabled value="{{ $snippet->title ?? "Без названия" }}" type="text" name="title" id="title" class="form-control" placeholder="Название &laquo;пасты&raquo;" />                    
                     <div class="dropdown">
                         <div class="btn-group">
                             <button class="btn dropdown-toggle disabled" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -12,7 +12,7 @@
                                 @if ($snippet->expired_at)
                                     Срок годности истекает: <b>{{ $snippet->expired_at }}</b>
                                 @else                                                                    
-                                    Срок годности <b>∞</b>
+                                    Срок годности: <b>∞</b>
                                 @endisset                                                         
                                 
                                 

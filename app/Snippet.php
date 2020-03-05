@@ -28,6 +28,6 @@ class Snippet extends Model
     
     public function accessMode()
     {
-        return $this->hasOne('App\SnippetsAccessMode', 'id');
+        return $this->hasOne('App\SnippetsAccessMode', 'id', 'access_mode_id');
     }
 }

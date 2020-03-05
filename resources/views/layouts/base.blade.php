@@ -19,14 +19,24 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <style>
             #pastaArea:focus{
-                padding-top: 15px;
+                /*padding-top: 15px;*/
             }
 
             #pastaArea{
                 transition: .3s;
-                height: 500px;
+                height: 400px;
             }
-            
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                z-index: 100;
+                padding: 48px 0 0;
+                box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            }
+
 
 
         </style>
@@ -61,39 +71,53 @@
             </nav>
         </header>
 
+
+<div class="row">
         <!-- Begin page content -->
-        <main role="main" class="container">
+        <main role="main" class="col-md-8 mr-sm-auto col-lg-9 px-4 pt-4 mt-5">
 
             @if (session('message'))
-                <div class="alert alert-success">
-                    {!! session('message') !!}
-                </div>
+            <div class="alert alert-success">
+                {!! session('message') !!}
+            </div>
             @endif
             
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @yield('content')
 
             <!--<h1 class="mt-5">Sticky footer with fixed navbar</h1>-->
             <!--<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>-->
-            <!--<p>Back to <a href="../sticky-footer/">the default sticky footer</a> minus the navbar.</p>-->
-        </main>
+            <!--<p>Back to <a href="../sticky-footer/">the default sticky footer</a> minus the nav                    bar.</p>-->
+    </main>
 
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted"><a href='mailto:artwork3d@gmail.com'>Яковлев Антон</a> &copy; 2020</span>
-            </div>
-        </footer>
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->   
-        <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-        <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>-->
-        <!--<script src="../../assets/js/vendor/popper.min.js"></script>-->
-        <!--<script src="../../dist/js/bootstrap.min.js"></script>-->
-        <script src="{{ asset('js/app.js') }}" defer></script>
+                                                 @include('layouts.listing')
+                                                 
+</div>
 
-        <script>
-
-        </script>
-    </body>
+                            <footer class="footer">
+                                    <div class="container">
+                                        <span class="text-muted"><a href='mailto:artwork3d@gmail.com'>Яковлев Антон                                    </a> &copy; 2020</s                                pan>
+                                    </div>
+                                </footer>
+        
+                <!-- Bo                otstrap core JavaScript
+                =======================                =========================== -->
+                <!-- Placed at the end of the d                ocument so the pages load faster -->   
+                <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></scr                ipt>-->
+                <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</scr                ipt>-->
+                <!--<script src="../../assets/js/vendor/popper.min.js"></script>-->
+                <!--<script src="../../dist/js/bootstrap.min.js"></script>-->
+<script src="{{ asset('js/app.js') }}" ></script>
+@yield('js')
+</body>
 </html>

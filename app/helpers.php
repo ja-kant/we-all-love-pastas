@@ -17,3 +17,7 @@ function generateRandomString($length = 10) {
     }
     return $randomString;
 }
+
+function formatDatetime($dt){
+    return date('d.m.Y H:i:s', strtotime($dt));
+}

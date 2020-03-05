@@ -20,7 +20,7 @@ class CreateSnippetsTable extends Migration
             $table->string('uid')->unique();
             $table->unsignedBigInteger('author_id')->nullable();
             $table->dateTime('expired_at')->nullable();
-            $table->unsignedSmallInteger('access_mode_id')->nullable();
+            $table->unsignedSmallInteger('access_mode_id');
             $table->timestamps();
             //
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');

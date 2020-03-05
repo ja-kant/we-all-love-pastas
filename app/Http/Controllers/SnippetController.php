@@ -23,7 +23,9 @@ class SnippetController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('snippets.create');
+        $lifetimes = \App\SnippetsLifetime::all();
+        $access_modes = \App\SnippetsAccessMode::all();
+        return view('snippets.create', compact('lifetimes', 'access_modes'));
     }
 
     /**
@@ -36,19 +38,24 @@ class SnippetController extends Controller {
         $validatedData = $request->validate([
             'title' => 'max:191',
             'content' => 'required|max:16777215',
+            'access_mode_id' => 'exists:snippets_access_modes,id'
+        ],[
+            'title.max' => 'Слишком длинный заголовок',
+            'content.max' => 'Слишком длинная паста',
+            'content.required' => 'Необходимо ввести содержимое пасты',
+            'access_mode_id.exists' => 'Необходимо указать режим доступа!'
         ]);
         $snippet = new Snippet();
         $snippet->title = $request->title;
         $snippet->content = $request->content;
         $snippet->generateUid();
 //        $snippet->author_id = 
-//        $snippet->expired_at = 
-        $snippet->access_mode_id = null;
+        $snippet->expired_at = date("Y-m-d H:i:s", time() + $request->seconds);
+        $snippet->access_mode_id = $request->access_mode_id;
         $snippet->save();
         
         $url = action('SnippetController@show', [$snippet->uid]);
         return redirect($url)->with('message', "Паста готова! <div><a href='$url'>$url</a></div>" );
-
     }
 
     /**
@@ -58,7 +65,11 @@ class SnippetController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($uid) {
-        $snippet = Snippet::where('uid', $uid)->first();        
+        $snippet = Snippet::where('uid', $uid)
+                ->where(function($q){
+                    $q->whereNull('expired_at')->orWhere('expired_at', '>=', date('Y-m-d H:i:s'));
+                })
+                ->first();        
         if (!$snippet){
             abort(404);
         }else {
