@@ -1,1 +1,11 @@
+git clone https://github.com/ja-kant/we-all-love-pastas.git <weAllLovePastas>
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+
 CREATE DATABASE `gl_pastebin` /*!40100 COLLATE 'utf8_unicode_ci' */
+
+DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
+php artisan migrate
+php artisan db:seed

@@ -25,4 +25,9 @@ class Snippet extends Model
             return true;
         }
     }
+    
+    public function accessMode()
+    {
+        return $this->hasOne('App\SnippetsAccessMode', 'id');
+    }
 }
