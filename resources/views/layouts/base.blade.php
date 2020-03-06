@@ -8,22 +8,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">       
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!--<link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">-->
-
-        <!-- Bootstrap core CSS -->
-        <!--<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">-->
-
-        <!-- Custom styles for this template -->
-        <!--<link href="sticky-footer-navbar.css" rel="stylesheet">-->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <style>
-            #pastaArea:focus{
-                /*padding-top: 15px;*/
-            }
-
             #pastaArea{
-                transition: .3s;
                 height: 400px;
             }
 
@@ -36,9 +23,6 @@
                 padding: 48px 0 0;
                 box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
             }
-
-
-
         </style>
     </head>
 
@@ -52,72 +36,84 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ url('/') }}">Главная <span class="sr-only">(текущая)</span></a>
-                        </li>
+                    <!--                    <form class="form-inline mt-2 mt-md-0 mr-0 ml-auto">
+                                            <input class="form-control mr-sm-2" type="text" placeholder="Введите часть текста" aria-label="Search">
+                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+                                        </form>-->
+                    <ul class="navbar-nav mr-0 ml-auto">
+
+                        @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
+                        @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
+                        @endif
+                        @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                           document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        @endguest
                     </ul>
-                    <form class="form-inline mt-2 mt-md-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Введите часть текста" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-                    </form>
                 </div>
             </nav>
         </header>
 
+        <div class="container">
+            <div class="row">
+                <main role="main" class="col-md-8 mr-sm-auto col-lg-9 px-4 pt-4">
 
-<div class="row">
-        <!-- Begin page content -->
-        <main role="main" class="col-md-8 mr-sm-auto col-lg-9 px-4 pt-4 mt-5">
+                    @if (session('status'))
+                    <div class="alert alert-info">
+                        {!! session('status') !!}
+                    </div>
+                    @endif
 
-            @if (session('message'))
-            <div class="alert alert-success">
-                {!! session('message') !!}
-            </div>
-            @endif
-            
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
+                    @if (session('message'))
+                    <div class="alert alert-success">
+                        {!! session('message') !!}
+                    </div>
+                    @endif
+
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
 
-            @yield('content')
+                    @yield('content')
+                </main>
+                @include('layouts.listing')
+            </div>
+        </div>
 
-            <!--<h1 class="mt-5">Sticky footer with fixed navbar</h1>-->
-            <!--<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>-->
-            <!--<p>Back to <a href="../sticky-footer/">the default sticky footer</a> minus the nav                    bar.</p>-->
-    </main>
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted"><a href='mailto:artwork3d@gmail.com'>Яковлев Антон</a> &copy; 2020</span>
+            </div>
+        </footer>
 
-
-                                                 @include('layouts.listing')
-                                                 
-</div>
-
-                            <footer class="footer">
-                                    <div class="container">
-                                        <span class="text-muted"><a href='mailto:artwork3d@gmail.com'>Яковлев Антон                                    </a> &copy; 2020</s                                pan>
-                                    </div>
-                                </footer>
-        
-                <!-- Bo                otstrap core JavaScript
-                =======================                =========================== -->
-                <!-- Placed at the end of the d                ocument so the pages load faster -->   
-                <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></scr                ipt>-->
-                <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</scr                ipt>-->
-                <!--<script src="../../assets/js/vendor/popper.min.js"></script>-->
-                <!--<script src="../../dist/js/bootstrap.min.js"></script>-->
-<script src="{{ asset('js/app.js') }}" ></script>
-@yield('js')
-</body>
+        <script src="{{ asset('js/app.js') }}" ></script>
+        @yield('js')
+    </body>
 </html>
