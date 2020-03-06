@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class ViewServiceProvider extends ServiceProvider {
 
@@ -28,15 +29,26 @@ class ViewServiceProvider extends ServiceProvider {
 
         View::composer('layouts.base', function ($view) {
 
+            $viewData = [];
+            
             $publicListing = \App\Snippet::where(function ($query) {
                         $query->whereNull('access_mode_id')
-                                ->orWhere('access_mode_id', 1);
+                        ->orWhere('access_mode_id', 1);
                     })
                     ->latest()
                     ->take(10)
                     ->get();
+            $viewData['publicListing'] = $publicListing;
+            
 
-            return $view->with('publicListing', $publicListing);
+            if (Auth::check()) {
+                $privateListing = \App\Snippet::where('author_id', Auth::id())
+                        ->latest()
+                        ->take(10)
+                        ->get();
+                $viewData['privateListing'] = $privateListing;
+            }          
+            return $view->with( $viewData );
         });
     }
 

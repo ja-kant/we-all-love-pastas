@@ -103,7 +103,14 @@
 
                     @yield('content')
                 </main>
-                @include('layouts.listing')
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        @include('layouts.listing', ['listing' => $publicListing, 'listingTitle' => 'Последние публичные пасты', 'listingEmpty' => 'Создайте публичную пасту, и она появится здесь!' ])
+                        @auth
+                        @include('layouts.listing', ['listing' => $privateListing, 'listingTitle' => 'Ваши недавние пасты', 'listingEmpty' => 'Здесь будут ваши недавние пасты' ])
+                        @endauth  
+                    </div>
+                </nav>
             </div>
         </div>
 

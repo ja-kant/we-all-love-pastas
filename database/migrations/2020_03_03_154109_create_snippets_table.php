@@ -23,8 +23,8 @@ class CreateSnippetsTable extends Migration
             $table->unsignedSmallInteger('access_mode_id');
             $table->timestamps();
             //
-            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('access_mode_id')->references('id')->on('snippets_access_modes')->onDelete('SET NULL');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('access_mode_id')->references('id')->on('snippets_access_modes')->onDelete('cascade');
         });
     }
 

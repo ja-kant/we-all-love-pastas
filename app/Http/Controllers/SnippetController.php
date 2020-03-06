@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Snippet;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SnippetController extends Controller {
 
@@ -49,7 +50,9 @@ class SnippetController extends Controller {
         $snippet->title = $request->title;
         $snippet->content = $request->content;
         $snippet->generateUid();
-//        $snippet->author_id = 
+        if (Auth::check()){
+            $snippet->author_id = Auth::id();
+        }        
         $snippet->expired_at = date("Y-m-d H:i:s", time() + $request->seconds);
         $snippet->access_mode_id = $request->access_mode_id;
         $snippet->save();
