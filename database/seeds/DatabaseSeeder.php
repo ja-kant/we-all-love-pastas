@@ -11,8 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(SnippetsAccessModesSeeder::class);
+         $this->call(SnippetsAccessModesSeeder::class); 
+         $this->call(SyntaxHighlightersSeeder::class);
          $this->call(SnippetsLifetimesSeeder::class);
          $this->call(UsersSeeder::class);
+        
     }
 }

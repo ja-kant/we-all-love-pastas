@@ -26,7 +26,8 @@ class SnippetController extends Controller {
     public function create() {
         $lifetimes = \App\SnippetsLifetime::all();
         $access_modes = \App\SnippetsAccessMode::all();
-        return view('snippets.create', compact('lifetimes', 'access_modes'));
+        $syntax_highlighters = \App\SyntaxHighlighter::all();
+        return view('snippets.create', compact('lifetimes', 'access_modes', 'syntax_highlighters'));
     }
 
     /**
@@ -39,7 +40,8 @@ class SnippetController extends Controller {
         $validatedData = $request->validate([
             'title' => 'max:191',
             'content' => 'required|max:16777215',
-            'access_mode_id' => 'exists:snippets_access_modes,id'
+            'access_mode_id' => 'exists:snippets_access_modes,id',
+            'syntax_highlighter_id' => 'exists:syntax_highlighters,id'
         ],[
             'title.max' => 'Слишком длинный заголовок',
             'content.max' => 'Слишком длинная паста',
@@ -56,6 +58,7 @@ class SnippetController extends Controller {
             $snippet->expired_at = date("Y-m-d H:i:s", time() + $request->seconds);
         }
         $snippet->access_mode_id = $request->access_mode_id;
+        $snippet->syntax_highlighter_id = $request->syntax_highlighter_id;
         $snippet->save();
         
         $url = action('SnippetController@show', [$snippet->uid]);               

@@ -10,8 +10,8 @@ class UsersSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        factory(App\User::class, 30)->create()->each(function ($user) {
-            $user->snippets()->saveMany(factory(App\Snippet::class, 50)->make());
+        factory(App\User::class, 25)->create()->each(function ($user) {
+            $user->snippets()->saveMany(factory(App\Snippet::class, 15)->make());
         });
     }
 

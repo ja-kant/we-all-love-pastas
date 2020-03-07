@@ -21,10 +21,12 @@ class CreateSnippetsTable extends Migration
             $table->unsignedBigInteger('author_id')->nullable();
             $table->dateTime('expired_at')->nullable();
             $table->unsignedSmallInteger('access_mode_id');
+            $table->unsignedBigInteger('syntax_highlighter_id')->default(1);
             $table->timestamps();
             //
             $table->foreign('author_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('access_mode_id')->references('id')->on('snippets_access_modes')->onDelete('cascade');
+            $table->foreign('syntax_highlighter_id')->references('id')->on('syntax_highlighters')->onDelete('cascade');
         });
     }
 

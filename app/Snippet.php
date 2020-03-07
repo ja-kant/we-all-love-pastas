@@ -26,32 +26,12 @@ class Snippet extends Model {
         if ($value){
             return formatDatetime($value);
         }else {
-            return "&mdash;";
+            return "∞";
         }        
     }
-    
-    /**
-     * Function sets new uid of current snippet instance in case it doesn't have one
-     * @return type
-     */
-//    public function generateUid(){
-//        if (!empty($this->uid)){
-//            return false;
-//        }else {            
-//            $collided = true;
-//            $newUid = "";
-//            while ( $collided ){
-//                $newUid = generateRandomString();
-//                $collided = Snippet::where('uid', $newUid)->count();
-//            }
-//            $this->uid = $newUid;
-//            return true;
-//        }
-//    }
 
     protected function getNewUid() {
         $collided = true;
-        $newUid = "";
         while ($collided) {
             $newUid = generateRandomString();
             $collided = Snippet::where('uid', $newUid)->count();
@@ -61,6 +41,10 @@ class Snippet extends Model {
 
     public function accessMode() {
         return $this->hasOne('App\SnippetsAccessMode', 'id', 'access_mode_id');
+    }
+    
+    public function syntaxHighlighter(){
+        return $this->hasOne('App\SyntaxHighlighter', 'id', 'syntax_highlighter_id');
     }
 
 }
