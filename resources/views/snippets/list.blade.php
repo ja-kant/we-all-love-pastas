@@ -1,33 +1,22 @@
 @extends('layouts.base')
-@section('content')        
-
-<form method="post" action="{{ action('SnippetController@store') }}">
-                @csrf
-                <div class="form-group form-inline">
-                    <input disabled value="{{ $snippet->title ?? "Без названия" }}" type="text" name="title" id="title" class="form-control" placeholder="Название &laquo;пасты&raquo;" />                    
-                    <div class="dropdown">
-                        <div class="btn-group">
-                            <button class="btn dropdown-toggle disabled" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                
-                                @if ($snippet->expired_at)
-                                    Срок годности истекает: <b>{{ $snippet->expired_at }}</b>
-                                @else                                                                    
-                                    Срок годности: <b>∞</b>
-                                @endisset                                                         
-                                
-                                
-                            </button>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn dropdown-toggle disabled" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Доступ: <b>{{ $snippet->accessMode->title }}</b>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <textarea readonly required name="content" class="form-control" id="pastaArea" rows="3">{{ $snippet->content }}</textarea>
-            </form>
-                    
-                    
+@section('content')
+<div class="container">
+    <div class="list-group">
+        @foreach ($snippets as $snippet)
+         <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ $snippet->title }}</h5>             
+            </div>
+             
+             <small>Создана: <b>{{$snippet->created_at}}</b></small>
+             <small>Истекает: <b>{{$snippet->expired_at}}</b></small>
+              <small>Доступ: <b>{{$snippet->accessMode->title}}</b></small>
+             
+            <p class="mb-1">{{$snippet->content}}</p>
+          </a>
+        @endforeach       
+    </div>
+    <br>
+    {!! $snippets->render() !!}
+</div>                    
 @endsection

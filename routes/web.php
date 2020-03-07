@@ -14,3 +14,4 @@
 Auth::routes();
 Route::resource('/', 'SnippetController');
 Route::get('/{uid}', 'SnippetController@show');
+Route::get('/user/pastas', 'SnippetController@userSnippets');

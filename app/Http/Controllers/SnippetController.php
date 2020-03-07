@@ -49,15 +49,16 @@ class SnippetController extends Controller {
         $snippet = new Snippet();
         $snippet->title = $request->title;
         $snippet->content = $request->content;
-        $snippet->generateUid();
         if (Auth::check()){
             $snippet->author_id = Auth::id();
-        }        
-        $snippet->expired_at = date("Y-m-d H:i:s", time() + $request->seconds);
+        }  
+        if (is_int($request->seconds) && $request->seconds > 0 ){
+            $snippet->expired_at = date("Y-m-d H:i:s", time() + $request->seconds);
+        }
         $snippet->access_mode_id = $request->access_mode_id;
         $snippet->save();
         
-        $url = action('SnippetController@show', [$snippet->uid]);
+        $url = action('SnippetController@show', [$snippet->uid]);               
         return redirect($url)->with('message', "Паста готова! <div><a href='$url'>$url</a></div>" );
     }
 
@@ -111,4 +112,12 @@ class SnippetController extends Controller {
         //
     }
 
+    public function userSnippets(){
+        if (Auth::check()){
+            $snippets = Snippet::where('author_id', Auth::id())->paginate(5);
+            return view('snippets.list', compact('snippets'));
+        }else {
+            abort(401);
+        }
+    }
 }

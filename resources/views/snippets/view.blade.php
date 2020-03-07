@@ -10,7 +10,7 @@
                             <button class="btn dropdown-toggle disabled" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 
                                 @if ($snippet->expired_at)
-                                    Срок годности истекает: <b>{{ $snippet->expired_at }}</b>
+                                    Срок годности истекает: <b>{{ \App\formatDatetime($snippet->expired_at) }}</b>
                                 @else                                                                    
                                     Срок годности: <b>∞</b>
                                 @endisset                                                         

@@ -40,6 +40,15 @@
                                             <input class="form-control mr-sm-2" type="text" placeholder="Введите часть текста" aria-label="Search">
                                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
                                         </form>-->
+                    
+                    <ul class='navbar-nav'>
+                        @auth
+                        <li class='nav-item'>
+                            <a class='nav-link' href='{{ action('SnippetController@userSnippets') }}'>Мои пасты</a>
+                        </li>
+                        @endauth
+                    </ul>
+                    
                     <ul class="navbar-nav mr-0 ml-auto">
 
                         @guest
@@ -75,9 +84,9 @@
             </nav>
         </header>
 
-        <div class="container">
+        <div class="container-fluid mt-5">
             <div class="row">
-                <main role="main" class="col-md-8 mr-sm-auto col-lg-9 px-4 pt-4">
+                <main role="main" class="col-md-9 mr-sm-auto col-lg-9 px-4 pt-4">
 
                     @if (session('status'))
                     <div class="alert alert-info">
