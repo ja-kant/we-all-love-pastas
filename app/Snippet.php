@@ -46,5 +46,9 @@ class Snippet extends Model {
     public function syntaxHighlighter(){
         return $this->hasOne('App\SyntaxHighlighter', 'id', 'syntax_highlighter_id');
     }
+    
+    public function author() {
+        return $this->hasOne('App\User', 'id', 'author_id');
+    }
 
 }

@@ -16,6 +16,7 @@ class CreateSnippetsAccessModesTable extends Migration
         Schema::create('snippets_access_modes', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('title', 50);
+            $table->unsignedTinyInteger('auth_only')->default(0);
             $table->timestamps();
         });
     }

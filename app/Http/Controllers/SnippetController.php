@@ -25,7 +25,12 @@ class SnippetController extends Controller {
      */
     public function create() {
         $lifetimes = \App\SnippetsLifetime::all();
-        $access_modes = \App\SnippetsAccessMode::all();
+        if (Auth::check()){
+            $access_modes = \App\SnippetsAccessMode::all();
+        }else {
+            $access_modes = \App\SnippetsAccessMode::where('auth_only' , 0)->get();
+        }
+        
         $syntax_highlighters = \App\SyntaxHighlighter::all();
         return view('snippets.create', compact('lifetimes', 'access_modes', 'syntax_highlighters'));
     }
@@ -76,7 +81,14 @@ class SnippetController extends Controller {
                 ->where(function($q){
                     $q->whereNull('expired_at')->orWhere('expired_at', '>=', date('Y-m-d H:i:s'));
                 })
-                ->first();        
+                ->first();    
+        
+        if ($snippet->accessMode->id == 3){
+            if (!Auth::check() || Auth::id() !== $snippet->author->id){
+                abort(401);
+            }
+        }
+                
         if (!$snippet){
             abort(404);
         }else {
