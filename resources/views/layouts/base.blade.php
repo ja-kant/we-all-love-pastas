@@ -9,25 +9,8 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <style>
-            #pastaArea{
-                height: 400px;
-            }
-
-            .sidebar {
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                z-index: 100;
-                padding: 48px 0 0;
-                box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-            }
-        </style>
     </head>
-
     <body>
-
         <header>
             <!-- Fixed navbar -->
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -36,11 +19,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <!--                    <form class="form-inline mt-2 mt-md-0 mr-0 ml-auto">
-                                            <input class="form-control mr-sm-2" type="text" placeholder="Введите часть текста" aria-label="Search">
-                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-                                        </form>-->
-                    
+                    <form action="{{ action('SnippetController@search') }}" method="get" class="form-inline mt-2 mt-md-0 mr-0 ml-auto">
+                        <input class="form-control mr-sm-2" type="text" name="term" placeholder="Введите часть текста" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+                    </form>
+
                     <ul class='navbar-nav'>
                         @auth
                         <li class='nav-item'>
@@ -48,8 +31,8 @@
                         </li>
                         @endauth
                     </ul>
-                    
-                    <ul class="navbar-nav mr-0 ml-auto">
+
+                    <ul class="navbar-nav mr-0 ml-0">
 
                         @guest
                         <li class="nav-item">

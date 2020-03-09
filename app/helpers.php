@@ -21,3 +21,11 @@ function generateRandomString($length = 10) {
 function formatDatetime($dt){
     return date('d.m.Y H:i:s', strtotime($dt));
 }
+
+function highlight($text, $words) {
+    preg_match_all('~\w+~', $words, $m);
+    if(!$m)
+        return $text;
+    $re = '~\\b(' . implode('|', $m[0]) . ')\\b~';
+    return preg_replace($re, '<span style="background:yellow;">$0</span>', $text);
+}

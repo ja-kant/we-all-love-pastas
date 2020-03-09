@@ -37,27 +37,10 @@
 
 @section('js')
 <script>
-    $(function () {
-        
+    $(function () {        
         editor = ace.edit("pastaArea");
-        editor.session.setMode( "{{ $snippet->syntaxHighlighter->mode }}" );          
-        
-//        $(".dropdown-item").click(function (e) {
-//            var btn = $(this).data('button');
-//            $(btn).text($(this).html());            
-//            var input = $(this).data('input');           
-//            $(input).val($(this).data('value'));            
-//            e.preventDefault();
-//        });
-        
-        
-//        $("#syntax-dropdown-menu .dropdown-item").click(function(e){
-////            editor.setTheme("ace/theme/twilight");
-//           
-//        });
-//        editor.session.on('change', function(delta) {
-//            $("#pastaHidden").val( editor.getValue() );
-//        });
+        editor.session.setMode( "{{ $snippet->syntaxHighlighter->mode }}" );  
+        editor.setReadOnly(true);
     });
     
     
