@@ -20,7 +20,7 @@ MySQL:
 
 Командная строка
 
-    php artisan migrate:fresh
+    php artisan migrate:fresh --seed
 
 Для демонстрационных целей возможно использовать тестовый сервер PHP
 Для этого необходимо запустить команду
